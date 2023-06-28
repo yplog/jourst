@@ -1,17 +1,14 @@
+use args::Cli;
 use clap::Parser;
 use dotenv::dotenv;
 use operations::folder::{is_directory_exists, read_directory, create_directory};
 use std::env;
 
 mod operations;
+mod models;
+mod args;
 
 const DEFAULT_APPLICATION_PATH: &str = ".jourst";
-
-#[derive(Parser)]
-struct Cli {
-    pattern: String,
-    path: std::path::PathBuf,
-}
 
 fn main() {
     let base_path = application_path();
@@ -43,7 +40,8 @@ fn main() {
         }
     }
 
-    let args = Cli::parse();
+    let matches = Cli::parse();
+    println!("{:?}", matches);
 }
 
 fn application_path() -> String {
