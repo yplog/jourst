@@ -1,4 +1,4 @@
-use chrono::NaiveDate;
+use chrono::{NaiveDate};
 use diesel::prelude::*;
 use serde::Deserialize;
 
@@ -19,4 +19,10 @@ pub struct Todo {
 pub struct NewTodo {
     pub content: String,
     pub when_will_it_be_done: NaiveDate,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct FilterTodo {
+    pub completed: Option<bool>,
+    pub when_will_it_be_done: Option<NaiveDate>,
 }

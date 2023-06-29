@@ -2,7 +2,7 @@ use std::error::Error;
 
 use diesel::prelude::*;
 
-use crate::models::todo::NewTodo;
+use crate::models::todo::{FilterTodo, NewTodo};
 use crate::models::*;
 use crate::schema::todos;
 
@@ -19,24 +19,25 @@ impl TodoRepository {
         }
     }
 
-    pub fn find(c: &mut SqliteConnection, id: i32) -> QueryResult<Todo> {
-        todos::table.find(id).get_result(c)
+    pub fn find_all(c: &mut SqliteConnection, filter: FilterTodo) -> QueryResult<Vec<Todo>> {
+        let mut query = todos::table.into_boxed();
+
+        if let Some(completed) = filter.completed {
+            query = query.filter(todos::completed.eq(completed));
+        }
+
+        if let Some(when_will_it_be_done) = filter.when_will_it_be_done {
+            query = query.filter(todos::when_will_it_be_done.eq(when_will_it_be_done));
+        }
+
+        query.load::<Todo>(c)
     }
 
-    pub fn find_all(c: &mut SqliteConnection) -> QueryResult<Vec<Todo>> {
-        todos::table.load::<Todo>(c)
-    }
-
-    pub fn update(c: &mut SqliteConnection, id: i32, todo: Todo) -> Result<(), Box<dyn Error>> {
-        match  {
-            diesel::update(todos::table.find(id))
-                .set((
-                    todos::content.eq(todo.content),
-                    todos::completed.eq(todo.completed),
-                    todos::when_will_it_be_done.eq(todo.when_will_it_be_done),
-                ))
-                .execute(c)
-        } {
+    pub fn done(c: &mut SqliteConnection, id: i32) -> Result<(), Box<dyn Error>> {
+        match diesel::update(todos::table.find(id))
+            .set(todos::completed.eq(true))
+            .execute(c)
+        {
             Ok(_) => Ok(()),
             Err(err) => Err(Box::new(err)),
         }
