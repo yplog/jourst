@@ -4,9 +4,7 @@ diesel::table! {
     todos (id) {
         id -> Integer,
         content -> Text,
-        date -> Date,
         completed -> Bool,
-        created_at -> Timestamp,
-        updated_at -> Timestamp,
+        when_will_it_be_done -> Date,
     }
 }
