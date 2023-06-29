@@ -1,7 +1,6 @@
-// Example: jourst <ACTION> <PATTERN> <PATH>
-// Example: jourst add "My first journal" "This is my first journal."
+// Example: jourst add "My first todo" today
 
-use clap::{ValueEnum, Parser, Subcommand, Args};
+use clap::{Args, Parser, Subcommand, ValueEnum};
 
 #[derive(ValueEnum, Clone, PartialEq, Debug)]
 pub enum Action {
@@ -67,7 +66,7 @@ pub struct AddCommand {
 #[derive(Debug, Args)]
 pub struct RemoveCommand {
     /// The id of the todo.
-    pub id: u32,
+    pub id: i32,
 }
 
 #[derive(Debug, Args)]
@@ -82,5 +81,5 @@ pub struct ListCommand {
 #[derive(Debug, Args)]
 pub struct DoneCommand {
     /// The id of the todo.
-    pub id: u32,
+    pub id: i32,
 }
