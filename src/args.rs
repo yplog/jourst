@@ -31,7 +31,7 @@ pub enum ListCommandType {
 }
 
 #[derive(Parser, Debug)]
-#[clap(author, about, version)]
+#[clap(author, about="Simple command line task manager", version)]
 pub struct Cli {
     #[clap(subcommand)]
     pub action: ActionType,
