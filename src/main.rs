@@ -30,12 +30,12 @@ fn main() {
 
             let result = TodoRepository::create(&mut connection, todo);
 
-            helpers::print_result(result);
+            let _ = helpers::print_result(result);
         }
         ActionType::Remove(remove_command) => {
             let result = TodoRepository::delete(&mut connection, remove_command.id);
 
-            helpers::print_result(result);
+            let _ = helpers::print_result(result);
         }
         ActionType::List(list_command) => {
             let new_date: Option<NaiveDate> =
@@ -48,12 +48,12 @@ fn main() {
 
             let todos = TodoRepository::find_all(&mut connection, filter);
 
-            helpers::print_table_result(todos);
+            let _ = helpers::print_table_result(todos);
         }
         ActionType::Done(done_command) => {
             let result = TodoRepository::done(&mut connection, done_command.id);
 
-            helpers::print_result(result);
+            let _ = helpers::print_result(result);
         }
     }
 }

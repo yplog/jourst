@@ -8,30 +8,6 @@ This project has been developed to better understand the Rust programming langua
 
 This is a simple command line-based todo management application. With this application, you can record tasks, view the task list, mark tasks as completed, and perform deletion operations.
 
-## Features
-
-- You can add new tasks.
-- You can list the tasks.
-- You can mark tasks as completed.
-- You can delete tasks.
-
-## Installation
-
-You can install the application with the following command:
-
-
-## Usage
-
-Use the following commands in the command line to perform todo management operations:
-
-- To add a new task:
-
-- To list the tasks:
-
-- To mark a task as completed:
-
-- To delete a task:
-
 ## Contributing
 
 If you would like to contribute to this project, please follow the steps below:

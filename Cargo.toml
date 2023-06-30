@@ -1,10 +1,15 @@
 [package]
 name = "jourst"
-version = "0.1.0"
+version = "0.3.0"
 edition = "2021"
 authors = ["Yalın Pala <yalinpala@proton.me>"]
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+description = "Simple command line todo tool"
+license = "MIT"
+repository = "https://github.com/yplog/jourst"
+homepage = "https://github.com/yplog/jourst"
+readme = "README.md"
+keywords = ["todo", "cli"]
+categories = ["cli", "command-line-utilities"]
 
 [dependencies]
 clap = { version = "4.3.8", features = ["derive"] }
@@ -15,3 +20,7 @@ diesel = { version = "2.0", features = ["sqlite", "chrono"] }
 chrono = { version = "0.4", features = ["serde"] }
 diesel_migrations = { version = "2.1.0", features = ["sqlite"] }
 colored = "2.0.0"
+
+[dev-dependencies]
+assert_cmd = "2.0.11"
+predicates = "3.0.3"
