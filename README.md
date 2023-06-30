@@ -6,7 +6,7 @@
 
 This project has been developed to better understand the Rust programming language and to learn the basic concepts in this language practically.
 
-This is a simple command line-based todo management application. With this application, you can record tasks, view the task list, mark tasks as completed, and perform deletion operations. It is designed with a simple and user-friendly interface.
+This is a simple command line-based todo management application. With this application, you can record tasks, view the task list, mark tasks as completed, and perform deletion operations.
 
 ## Features
 
