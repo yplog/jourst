@@ -1,5 +1,3 @@
-// Example: jourst add "My first todo" today
-
 use clap::{Args, Parser, Subcommand, ValueEnum};
 
 #[derive(ValueEnum, Clone, PartialEq, Debug)]

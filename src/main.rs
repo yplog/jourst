@@ -1,7 +1,6 @@
 use args::Cli;
 use chrono::NaiveDate;
 use clap::Parser;
-use colored::Colorize;
 use repositories::todo_repository::TodoRepository;
 
 use crate::{args::ActionType, models::todo::NewTodo};
@@ -31,18 +30,12 @@ fn main() {
 
             let result = TodoRepository::create(&mut connection, todo);
 
-            match result {
-                Ok(_) => println!("{}", "Ok!".green()),
-                Err(_) => println!("{}", "Error!".red()),
-            }
+            helpers::print_result(result);
         }
         ActionType::Remove(remove_command) => {
             let result = TodoRepository::delete(&mut connection, remove_command.id);
 
-            match result {
-                Ok(_) => println!("{}", "Ok!".green()),
-                Err(_) => println!("{}", "Error!".red()),
-            }
+            helpers::print_result(result);
         }
         ActionType::List(list_command) => {
             let new_date: Option<NaiveDate> =
@@ -55,22 +48,12 @@ fn main() {
 
             let todos = TodoRepository::find_all(&mut connection, filter);
 
-            println!(
-                "{0: <4} | {1: <2} | {2: <24} | {3: <10}",
-                "done", "id", "content", "date"
-            );
-
-            for todo in todos.unwrap() {
-                println!("{}", todo);
-            }
+            helpers::print_table_result(todos);
         }
         ActionType::Done(done_command) => {
             let result = TodoRepository::done(&mut connection, done_command.id);
 
-            match result {
-                Ok(_) => println!("{}", "Ok!".green()),
-                Err(_) => println!("{}", "Error!".red()),
-            }
+            helpers::print_result(result);
         }
     }
 }
