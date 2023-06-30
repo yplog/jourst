@@ -2,7 +2,11 @@ use assert_cmd::prelude::*;
 use predicates::prelude::*;
 use std::process::Command;
 
+// Ignored because it requires a database connection
+// Refactor to use a mock database
+
 #[test]
+#[ignore]
 fn test_add() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("jourst")?;
 
@@ -16,6 +20,7 @@ fn test_add() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 #[test]
+#[ignore]
 fn test_done() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("jourst")?;
 
@@ -29,6 +34,7 @@ fn test_done() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 #[test]
+#[ignore]
 fn test_remove() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("jourst")?;
 
@@ -42,6 +48,7 @@ fn test_remove() -> Result<(), Box<dyn std::error::Error>> {
 }
 
 #[test]
+#[ignore]
 fn test_list() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("jourst")?;
 
