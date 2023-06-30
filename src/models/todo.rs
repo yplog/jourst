@@ -1,4 +1,5 @@
-use chrono::{NaiveDate};
+use chrono::NaiveDate;
+use colored::Colorize;
 use diesel::prelude::*;
 use serde::Deserialize;
 
@@ -25,4 +26,26 @@ pub struct NewTodo {
 pub struct FilterTodo {
     pub completed: Option<bool>,
     pub when_will_it_be_done: Option<NaiveDate>,
+}
+
+impl std::fmt::Display for Todo {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        let completed = if self.completed { "[X]" } else { "[ ]" };
+
+        let line = if self.completed {
+            format!(
+                "{0: <4} | {1: <2} | {2: <24} | {3: <10}",
+                completed, self.id, self.content, self.when_will_it_be_done
+            )
+            .green()
+        } else {
+            format!(
+                "{0: <4} | {1: <2} | {2: <24} | {3: <10}",
+                completed, self.id, self.content, self.when_will_it_be_done
+            )
+            .red()
+        };
+
+        write!(f, "{}", line)
+    }
 }

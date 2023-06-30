@@ -18,7 +18,6 @@ fn main() {
     db::run_migrations(&mut connection).unwrap();
 
     let matches = Cli::parse();
-    println!("{:?}", matches);
 
     match matches.action {
         ActionType::Add(add_command) => {
@@ -47,12 +46,16 @@ fn main() {
                 when_will_it_be_done: new_date,
             };
 
-            let todos = TodoRepository::find_all(
-                &mut connection,
-                filter,
+            let todos = TodoRepository::find_all(&mut connection, filter);
+
+            println!(
+                "{0: <4} | {1: <2} | {2: <24} | {3: <10}",
+                "done", "id", "content", "date"
             );
 
-            println!("TODOS: {:?}", todos);
+            for todo in todos.unwrap() {
+                println!("{}", todo);
+            }
         }
         ActionType::Done(done_command) => {
             println!("Done command: {:?}", done_command);
