@@ -54,30 +54,36 @@ pub enum ActionType {
 
 #[derive(Debug, Args)]
 pub struct AddCommand {
-    /// The title of the todo.
+    /// The content of the todo.
+    #[clap(short='c', long="content")]
     pub content: String,
 
     /// The date of the todo.
+    #[clap(short='d', long="date", default_value="today")]
     pub date: AddCommandDate,
 }
 
 #[derive(Debug, Args)]
 pub struct RemoveCommand {
     /// The id of the todo.
+    #[clap(short='i', long="id")]
     pub id: i32,
 }
 
 #[derive(Debug, Args)]
 pub struct ListCommand {
     /// The type of the todo.
+    #[clap(short='k', long="kind", default_value="all")]
     pub kind: ListCommandType,
 
     /// The date of the todo.
+    #[clap(short='d', long="date", default_value="today")]
     pub date: ListCommandDate,
 }
 
 #[derive(Debug, Args)]
 pub struct DoneCommand {
     /// The id of the todo.
+    #[clap(short='i', long="id")]
     pub id: i32,
 }
