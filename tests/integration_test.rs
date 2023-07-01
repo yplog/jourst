@@ -2,8 +2,7 @@ use assert_cmd::prelude::*;
 use predicates::prelude::*;
 use std::process::Command;
 
-// Ignored because it requires a database connection
-// Refactor to use a mock database
+// Ignored because it sometimes fails on CI due to the database lock
 
 #[test]
 #[ignore]
