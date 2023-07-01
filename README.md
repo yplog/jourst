@@ -4,7 +4,7 @@
 
 <p align="center">
     <a href="https://hub.docker.com/r/yalinpala/jourst" target="_blank">
-        <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="crate">
+        <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="docker">
     </a>
     <a href="https://crates.io/crates/jourst" target="_blank">
         <img src="https://img.shields.io/crates/v/jourst.svg" alt="crate">
