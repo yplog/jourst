@@ -42,19 +42,3 @@ jobs:
       with:
         name: ${{ matrix.asset_name }}
         path: ${{ matrix.artifact_name }}
-
-publish-docker-image:
-runs-on: ubuntu-latest
-  steps:
-    - uses: actions/checkout@v2
-    - name: Login to GitHub Container Registry
-  uses: docker/login-action@v1
-  with:
-  registry: ghcr.io
-  username: ${{ github.actor }}
-  password: ${{ secrets.GITHUB_TOKEN }}
-    - name: Build the jourst Docker image
-    run: |
-           docker build . --tag ghcr.io/yplog/jourst:latest
-           docker run ghcr.io/yplog/jourst:latest
-           docker push ghcr.io/yplog/jourst:latest
