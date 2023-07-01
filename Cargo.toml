@@ -1,6 +1,6 @@
 [package]
 name = "jourst"
-version = "0.3.2"
+version = "0.3.3"
 edition = "2021"
 authors = ["Yalın Pala <yalinpala@proton.me>"]
 description = "Simple command line todo tool"
@@ -9,7 +9,7 @@ repository = "https://github.com/yplog/jourst"
 homepage = "https://github.com/yplog/jourst"
 readme = "README.md"
 keywords = ["todo", "cli"]
-categories = ["cli", "command-line-utilities"]
+categories = ["command-line-utilities"]
 
 [dependencies]
 clap = { version = "4.3.8", features = ["derive"] }
