@@ -2,6 +2,15 @@
     <img src="https://i.imgur.com/FhRSzjL.png" alt="jourst logo"  width="250" height="250">
 </p>
 
+<p align="center">
+    <a href="https://hub.docker.com/r/yalinpala/jourst" target="_blank">
+        <img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white" alt="crate">
+    </a>
+    <a href="https://crates.io/crates/jourst" target="_blank">
+        <img src="https://img.shields.io/crates/v/jourst.svg" alt="crate">
+    </a>
+</p>
+
 # jourst
 
 This project has been developed to better understand the Rust programming language and to learn the basic concepts in this language practically.
