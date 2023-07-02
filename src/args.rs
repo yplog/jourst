@@ -6,6 +6,7 @@ pub enum Action {
     Remove,
     List,
     Done,
+    Sync,
 }
 
 #[derive(ValueEnum, Clone, PartialEq, Debug)]
@@ -50,6 +51,9 @@ pub enum ActionType {
 
     /// Mark a todo as done.
     Done(DoneCommand),
+
+    /// Carries the to do that were not done on time to today.
+    Sync,
 }
 
 #[derive(Debug, Args)]

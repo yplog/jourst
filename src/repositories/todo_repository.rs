@@ -1,6 +1,6 @@
-use std::error::Error;
-
+use chrono::Local;
 use diesel::prelude::*;
+use std::error::Error;
 
 use crate::models::todo::{FilterTodo, NewTodo};
 use crate::models::*;
@@ -45,5 +45,22 @@ impl TodoRepository {
 
     pub fn delete(c: &mut SqliteConnection, id: i32) -> QueryResult<usize> {
         diesel::delete(todos::table.find(id)).execute(c)
+    }
+
+    pub fn sync(c: &mut SqliteConnection) -> Result<(), Box<dyn Error>> {
+        let today = Local::now().naive_local().date();
+
+        match diesel::update(todos::table)
+            .filter(
+                todos::when_will_it_be_done
+                    .lt(today)
+                    .and(todos::completed.eq(false)),
+            )
+            .set(todos::when_will_it_be_done.eq(today))
+            .execute(c)
+        {
+            Ok(_) => Ok(()),
+            Err(err) => Err(Box::new(err)),
+        }
     }
 }
