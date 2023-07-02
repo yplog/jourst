@@ -1,6 +1,6 @@
 [package]
 name = "jourst"
-version = "0.3.3"
+version = "0.4.0"
 edition = "2021"
 authors = ["Yalın Pala <yalinpala@proton.me>"]
 description = "Simple command line todo tool"

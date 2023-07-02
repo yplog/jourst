@@ -59,3 +59,17 @@ fn test_list() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+#[test]
+#[ignore]
+fn test_sync() -> Result<(), Box<dyn std::error::Error>> {
+    let mut cmd = Command::cargo_bin("jourst")?;
+
+    cmd.arg("sync");
+
+    cmd.assert()
+        .success()
+        .stdout(predicate::str::contains("Ok!"));
+
+    Ok(())
+}

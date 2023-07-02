@@ -55,5 +55,10 @@ fn main() {
 
             let _ = helpers::print_result(result);
         }
+        ActionType::Sync => {
+            let result = TodoRepository::sync(&mut connection);
+
+            let _ = helpers::print_result(result);
+        }
     }
 }
