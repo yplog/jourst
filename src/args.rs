@@ -7,6 +7,7 @@ pub enum Action {
     List,
     Done,
     Sync,
+    Export,
 }
 
 #[derive(ValueEnum, Clone, PartialEq, Debug)]
@@ -31,6 +32,12 @@ pub enum ListCommandType {
     Undone,
 }
 
+#[derive(ValueEnum, Clone, PartialEq, Debug)]
+pub enum ExportCommandType {
+    Markdown,
+    Html,
+}
+
 #[derive(Parser, Debug)]
 #[clap(author, about = "Simple command line task manager", version)]
 pub struct Cli {
@@ -51,6 +58,9 @@ pub enum ActionType {
 
     /// Mark a todo as done.
     Done(DoneCommand),
+
+    /// Export todos
+    Export(ExportCommand),
 
     /// Carries the to do that were not done on time to today.
     Sync,
@@ -83,6 +93,12 @@ pub struct ListCommand {
     /// The date of the todo.
     #[clap(short = 'd', long = "date", default_value = "today")]
     pub date: ListCommandDate,
+}
+
+#[derive(Debug, Args)]
+pub struct ExportCommand {
+    #[clap(short = 't', long = "type", default_value = "html" )]
+    pub export_type: ExportCommandType,
 }
 
 #[derive(Debug, Args)]
