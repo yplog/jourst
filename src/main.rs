@@ -70,7 +70,12 @@ fn main() {
 
             let todos = TodoRepository::find_all(&mut connection, filter);
 
-            println!("{:?}", todos);
+            match todos {
+                Err(e) => println!("{:?}", e),
+                Ok(result) => {
+                    println!("{:?}", result);
+                }
+            }
         }
     }
 }
