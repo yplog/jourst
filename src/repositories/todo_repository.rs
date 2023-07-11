@@ -63,9 +63,4 @@ impl TodoRepository {
             Err(err) => Err(Box::new(err)),
         }
     }
-
-    pub fn export_command(c: &mut SqliteConnection) -> QueryResult<Vec<Todo>> {
-        // TODO: Implement
-        !unimplemented!()
-    }
 }

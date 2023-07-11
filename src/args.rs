@@ -97,7 +97,7 @@ pub struct ListCommand {
 
 #[derive(Debug, Args)]
 pub struct ExportCommand {
-    #[clap(short = 't', long = "type", default_value = "html" )]
+    #[clap(short = 't', long = "type", default_value = "html")]
     pub export_type: ExportCommandType,
 }
 

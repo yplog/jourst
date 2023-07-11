@@ -61,11 +61,16 @@ fn main() {
             let _ = helpers::print_result(result);
         }
         ActionType::Export(export_command) => {
-            let command = export_command;
+            let _command = export_command;
 
-            let _result = TodoRepository::export_command(&mut connection);
+            let filter = models::todo::FilterTodo {
+                completed: None,
+                when_will_it_be_done: None,
+            };
 
-            println!("{:?}", command);
+            let todos = TodoRepository::find_all(&mut connection, filter);
+
+            println!("{:?}", todos);
         }
     }
 }
