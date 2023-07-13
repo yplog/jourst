@@ -1,10 +1,10 @@
-use chrono::{DateTime, Local};
+use chrono::{DateTime, Local, NaiveDate};
 use colored::Colorize;
-use std::io::{self, Write};
+use std::{io::{self, Write}, collections::HashMap};
 
 use crate::{
     args::{AddCommandDate, ListCommandDate, ListCommandType},
-    models::Todo,
+    models::{Todo, self},
 };
 
 pub fn get_date(date: &AddCommandDate) -> DateTime<Local> {
@@ -64,6 +64,11 @@ pub fn print_result<T, E>(result: Result<T, E>) -> Result<(), io::Error> {
         Ok(_) => writeln!(io::stdout(), "{}", "Ok!".green()),
         Err(_) => writeln!(io::stdout(), "{}", "Ok!".red()),
     }
+}
+
+// TODO: HTML generating function
+pub fn generate_html(group: HashMap<NaiveDate, Vec<models::Todo>>) {
+    !unimplemented!()
 }
 
 #[cfg(test)]
