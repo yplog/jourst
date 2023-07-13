@@ -70,7 +70,7 @@ pub fn print_result<T, E>(result: Result<T, E>) -> Result<(), io::Error> {
 }
 
 pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) {
-    const HEADER: &str = r#"<!DOCTYPE html>
+    let header: &str = r#"<!DOCTYPE html>
     <html lang="en">
     
       <head>
@@ -82,12 +82,12 @@ pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) {
     
     "#;
 
-    const FOOTER: &str = r#"
+    let footer: &str = r#"
     </body>
     </html>
     "#;
 
-    let mut content = HEADER.to_owned();
+    let mut content = header.to_owned();
 
     for (date, todos) in groups.iter() {
         let h1 = format!(
@@ -112,7 +112,7 @@ pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) {
         }
     }
 
-    content.push_str(FOOTER);
+    content.push_str(footer);
 
     println!("{}", content);
 }
