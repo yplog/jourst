@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 use args::Cli;
 use chrono::NaiveDate;
 use clap::Parser;
@@ -62,6 +64,7 @@ fn main() {
         }
         ActionType::Export(export_command) => {
             let _command = export_command;
+            let mut groups: HashMap<NaiveDate, Vec<models::Todo>> = HashMap::new();
 
             let filter = models::todo::FilterTodo {
                 completed: None,
@@ -73,9 +76,14 @@ fn main() {
             match todos {
                 Err(e) => println!("{:?}", e),
                 Ok(result) => {
-                    println!("{:?}", result);
+                    result.into_iter().for_each(|todo| {
+                        let group = groups.entry(todo.when_will_it_be_done).or_insert(vec![]);
+                        group.push(todo);
+                    });
                 }
             }
+
+            println!("{:?}", groups);
         }
     }
 }
