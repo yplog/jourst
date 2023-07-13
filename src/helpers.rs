@@ -72,30 +72,22 @@ pub fn print_result<T, E>(result: Result<T, E>) -> Result<(), io::Error> {
 pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) -> String {
     let header: &str = r#"<!DOCTYPE html>
     <html lang="en">
-    
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
       </head>
-
       <body>
-    
     "#;
 
     let footer: &str = r#"
-    </body>
+      </body>
     </html>
     "#;
 
     let mut content = header.to_owned();
 
     for (date, todos) in groups.iter() {
-        let h1 = format!(
-            r#"
-            <h1>{}</h1>
-        "#,
-            date
-        );
+        let h1 = format!(r#"<h1>{}</h1>"#, date);
 
         content.push_str(&h1);
 
@@ -122,7 +114,7 @@ pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use chrono::Duration;
+    use chrono::{Duration, Utc};
 
     #[test]
     fn test_get_date() {
@@ -215,6 +207,32 @@ mod tests {
 
     #[test]
     fn test_generate_html() {
-        !unimplemented!()
+        use chrono::NaiveDate;
+        use models::Todo;
+        use std::collections::HashMap;
+
+        // Create some sample data
+        let mut groups: HashMap<NaiveDate, Vec<Todo>> = HashMap::new();
+        let todos = vec![
+            Todo {
+                id: 1,
+                content: "Buy groceries".to_owned(),
+                completed: false,
+                when_will_it_be_done: Utc::now().naive_utc().into(),
+            },
+            Todo {
+                id: 2,
+                content: "Clean the house".to_owned(),
+                completed: true,
+                when_will_it_be_done: Utc::now().naive_utc().into(),
+            },
+        ];
+        groups.insert(NaiveDate::from_ymd_opt(2023, 7, 1).unwrap(), todos);
+
+        // Call the generate_html function
+        let html = generate_html(groups);
+        let slice = &html[0..15];
+
+        assert_eq!(slice, "<!DOCTYPE html>");
     }
 }
