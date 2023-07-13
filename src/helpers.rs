@@ -1,10 +1,13 @@
 use chrono::{DateTime, Local, NaiveDate};
 use colored::Colorize;
-use std::{io::{self, Write}, collections::HashMap};
+use std::{
+    collections::HashMap,
+    io::{self, Write},
+};
 
 use crate::{
     args::{AddCommandDate, ListCommandDate, ListCommandType},
-    models::{Todo, self},
+    models::{self, Todo},
 };
 
 pub fn get_date(date: &AddCommandDate) -> DateTime<Local> {
@@ -72,7 +75,7 @@ pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) {
         println!("= {:?}", date);
         for todo in todos {
             println!("- {:?}", todo);
-        }    
+        }
     }
 }
 
