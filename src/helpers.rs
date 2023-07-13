@@ -212,4 +212,9 @@ mod tests {
         let result = Ok::<(), ()>(());
         assert_eq!(print_result(result).is_ok(), true);
     }
+
+    #[test]
+    fn test_generate_html() {
+        !unimplemented!()
+    }
 }
