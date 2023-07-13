@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, fs};
 
 use args::Cli;
 use chrono::NaiveDate;
@@ -83,8 +83,9 @@ fn main() {
                 }
             }
 
-            // println!("{:?}", groups);
-            let _ = helpers::generate_html(groups);
+            let content = helpers::generate_html(groups);
+
+            fs::write("index.html", content).expect("Unable to write file!");
         }
     }
 }

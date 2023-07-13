@@ -69,7 +69,7 @@ pub fn print_result<T, E>(result: Result<T, E>) -> Result<(), io::Error> {
     }
 }
 
-pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) {
+pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) -> String {
     let header: &str = r#"<!DOCTYPE html>
     <html lang="en">
     
@@ -100,12 +100,14 @@ pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) {
         content.push_str(&h1);
 
         for todo in todos {
+            let check = if todo.completed { "checked" } else { "" };
+
             let checkbox = format!(
                 r#"
-                <input type="checkbox" id="{}" checked="{}">
+                <input type="checkbox" id="{}" {}">
                 <label for="{}">{}</label><br>
             "#,
-                todo.id, todo.completed, todo.id, todo.content
+                todo.id, check, todo.id, todo.content
             );
 
             content.push_str(&checkbox);
@@ -114,7 +116,7 @@ pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) {
 
     content.push_str(footer);
 
-    println!("{}", content);
+    content
 }
 
 #[cfg(test)]
