@@ -1,8 +1,13 @@
-use std::{collections::HashMap, fs};
+use std::{
+    collections::HashMap,
+    fs,
+    io::{self, Write},
+};
 
 use args::Cli;
 use chrono::NaiveDate;
 use clap::Parser;
+use colored::Colorize;
 use repositories::todo_repository::TodoRepository;
 
 use crate::{args::ActionType, models::todo::NewTodo};
@@ -87,7 +92,7 @@ fn main() {
 
             fs::write("index.html", content).expect("Unable to write file!");
 
-            println!("Ok!");
+            let _ = writeln!(io::stdout(), "{}", "Ok!".green());
         }
     }
 }
