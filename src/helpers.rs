@@ -69,14 +69,52 @@ pub fn print_result<T, E>(result: Result<T, E>) -> Result<(), io::Error> {
     }
 }
 
-// TODO: HTML generating function
 pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) {
+    const HEADER: &str = r#"<!DOCTYPE html>
+    <html lang="en">
+    
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+      </head>
+
+      <body>
+    
+    "#;
+
+    const FOOTER: &str = r#"
+    </body>
+    </html>
+    "#;
+
+    let mut content = HEADER.to_owned();
+
     for (date, todos) in groups.iter() {
-        println!("= {:?}", date);
+        let h1 = format!(
+            r#"
+            <h1>{}</h1>
+        "#,
+            date
+        );
+
+        content.push_str(&h1);
+
         for todo in todos {
-            println!("- {:?}", todo);
+            let checkbox = format!(
+                r#"
+                <input type="checkbox" id="{}" checked="{}">
+                <label for="{}">{}</label><br>
+            "#,
+                todo.id, todo.completed, todo.id, todo.content
+            );
+
+            content.push_str(&checkbox);
         }
     }
+
+    content.push_str(FOOTER);
+
+    println!("{}", content);
 }
 
 #[cfg(test)]
