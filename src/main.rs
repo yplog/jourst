@@ -83,7 +83,8 @@ fn main() {
                 }
             }
 
-            println!("{:?}", groups);
+            // println!("{:?}", groups);
+            let _ = helpers::generate_html(groups);
         }
     }
 }

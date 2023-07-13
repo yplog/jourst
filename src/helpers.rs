@@ -67,8 +67,13 @@ pub fn print_result<T, E>(result: Result<T, E>) -> Result<(), io::Error> {
 }
 
 // TODO: HTML generating function
-pub fn generate_html(group: HashMap<NaiveDate, Vec<models::Todo>>) {
-    !unimplemented!()
+pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) {
+    for (date, todos) in groups.iter() {
+        println!("= {:?}", date);
+        for todo in todos {
+            println!("- {:?}", todo);
+        }    
+    }
 }
 
 #[cfg(test)]
