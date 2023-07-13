@@ -114,7 +114,7 @@ pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) -> String {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use chrono::{Duration, Utc};
+    use chrono::Duration;
 
     #[test]
     fn test_get_date() {
@@ -218,13 +218,13 @@ mod tests {
                 id: 1,
                 content: "Buy groceries".to_owned(),
                 completed: false,
-                when_will_it_be_done: Utc::now().naive_utc().into(),
+                when_will_it_be_done: Local::now().naive_local().into(),
             },
             Todo {
                 id: 2,
                 content: "Clean the house".to_owned(),
                 completed: true,
-                when_will_it_be_done: Utc::now().naive_utc().into(),
+                when_will_it_be_done: Local::now().naive_local().into(),
             },
         ];
         groups.insert(NaiveDate::from_ymd_opt(2023, 7, 1).unwrap(), todos);
