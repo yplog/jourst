@@ -86,6 +86,8 @@ fn main() {
             let content = helpers::generate_html(groups);
 
             fs::write("index.html", content).expect("Unable to write file!");
+            
+            println!("Ok!");
         }
     }
 }

@@ -73,3 +73,17 @@ fn test_sync() -> Result<(), Box<dyn std::error::Error>> {
 
     Ok(())
 }
+
+#[test]
+#[ignore]
+fn test_export() -> Result<(), Box<dyn std::error::Error>> {
+    let mut cmd = Command::cargo_bin("jourst")?;
+
+    cmd.arg("export");
+
+    cmd.assert()
+        .success()
+        .stdout(predicate::str::contains("Ok!"));
+
+    Ok(())
+}
