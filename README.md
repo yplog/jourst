@@ -17,6 +17,14 @@ This project has been developed to better understand the Rust programming langua
 
 This is a simple command line-based to do management application. With this application, you can record tasks, view the task list, mark tasks as completed, and perform deletion operations.
 
+## Features
+- Add
+- List
+- Mark task as completed
+- Remove
+- Sync
+- Export
+
 ## Basic Usage
 
 [![asciicast](https://asciinema.org/a/3105sxzOoBnl9uIj5svYjeaG8.svg)](https://asciinema.org/a/3105sxzOoBnl9uIj5svYjeaG8)

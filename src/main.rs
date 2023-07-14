@@ -1,6 +1,13 @@
+use std::{
+    collections::HashMap,
+    fs,
+    io::{self, Write},
+};
+
 use args::Cli;
 use chrono::NaiveDate;
 use clap::Parser;
+use colored::Colorize;
 use repositories::todo_repository::TodoRepository;
 
 use crate::{args::ActionType, models::todo::NewTodo};
@@ -59,6 +66,33 @@ fn main() {
             let result = TodoRepository::sync(&mut connection);
 
             let _ = helpers::print_result(result);
+        }
+        ActionType::Export(export_command) => {
+            let _command = export_command;
+            let mut groups: HashMap<NaiveDate, Vec<models::Todo>> = HashMap::new();
+
+            let filter = models::todo::FilterTodo {
+                completed: None,
+                when_will_it_be_done: None,
+            };
+
+            let todos = TodoRepository::find_all(&mut connection, filter);
+
+            match todos {
+                Err(e) => println!("{:?}", e),
+                Ok(result) => {
+                    result.into_iter().for_each(|todo| {
+                        let group = groups.entry(todo.when_will_it_be_done).or_insert(vec![]);
+                        group.push(todo);
+                    });
+                }
+            }
+
+            let content = helpers::generate_html(groups);
+
+            fs::write("index.html", content).expect("Unable to write file!");
+
+            let _ = writeln!(io::stdout(), "{}", "Ok!".green());
         }
     }
 }
