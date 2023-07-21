@@ -47,6 +47,18 @@ impl TodoRepository {
         diesel::delete(todos::table.find(id)).execute(c)
     }
 
+    pub fn delete_completed(c: &mut SqliteConnection) -> Result<(), Box<dyn Error>> {
+        let mut query = todos::table.into_boxed();
+        query = query.filter(todos::completed.eq(true));
+        let filtered_todos = query.load::<Todo>(c);
+
+        for todo in filtered_todos.unwrap() {
+            let _ = diesel::delete(todos::table.find(todo.id)).execute(c);
+        }
+
+        Ok(())
+    }
+
     pub fn sync(c: &mut SqliteConnection) -> Result<(), Box<dyn Error>> {
         let today = Local::now().naive_local().date();
 

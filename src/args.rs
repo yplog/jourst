@@ -38,6 +38,12 @@ pub enum ExportCommandType {
     Html,
 }
 
+#[derive(ValueEnum, Clone, PartialEq, Debug)]
+pub enum RemoveCommandType {
+    ID,
+    ALL,
+}
+
 #[derive(Parser, Debug)]
 #[clap(author, about = "Simple command line task manager", version)]
 pub struct Cli {
@@ -79,8 +85,12 @@ pub struct AddCommand {
 
 #[derive(Debug, Args)]
 pub struct RemoveCommand {
+    /// Remove Command Type
+    #[clap(short = 't', long = "type")]
+    pub kind: RemoveCommandType,
+
     /// The id of the todo.
-    #[clap(short = 'i', long = "id")]
+    #[clap(short = 'i', long = "id", default_value = "-1")]
     pub id: i32,
 }
 

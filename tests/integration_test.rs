@@ -37,7 +37,7 @@ fn test_done() -> Result<(), Box<dyn std::error::Error>> {
 fn test_remove() -> Result<(), Box<dyn std::error::Error>> {
     let mut cmd = Command::cargo_bin("jourst")?;
 
-    cmd.arg("remove").arg("-i").arg("1");
+    cmd.arg("remove").arg("--type").arg("all");
 
     cmd.assert()
         .success()
