@@ -40,10 +40,8 @@ fn main() {
             let _ = helpers::print_result(result);
         }
         ActionType::Remove(remove_command) => {
-            let result = TodoRepository::delete(&mut connection, remove_command.id);
-
-            let _ = helpers::print_result(result);
-        }
+            // TODO: -i and -t ALL
+        },
         ActionType::List(list_command) => {
             let new_date: Option<NaiveDate> =
                 helpers::get_filter_date(&list_command.date).map(|date| date.naive_local().into());
