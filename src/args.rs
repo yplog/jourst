@@ -40,7 +40,8 @@ pub enum ExportCommandType {
 
 #[derive(ValueEnum, Clone, PartialEq, Debug)]
 pub enum RemoveCommandType {
-    ALL
+    ID,
+    ALL,
 }
 
 #[derive(Parser, Debug)]
@@ -84,13 +85,13 @@ pub struct AddCommand {
 
 #[derive(Debug, Args)]
 pub struct RemoveCommand {
-    /// The id of the todo.
-    #[clap(short = 'i', long = "id")]
-    pub id: i32,
-
-    /// Delete many
+    /// Remove Command Type
     #[clap(short = 't', long = "type")]
     pub kind: RemoveCommandType,
+
+    /// The id of the todo.
+    #[clap(short = 'i', long = "id", default_value = "-1")]
+    pub id: i32,
 }
 
 #[derive(Debug, Args)]

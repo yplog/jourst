@@ -4,7 +4,7 @@ use std::{
     io::{self, Write},
 };
 
-use args::Cli;
+use args::{Cli, RemoveCommandType};
 use chrono::NaiveDate;
 use clap::Parser;
 use colored::Colorize;
@@ -39,8 +39,17 @@ fn main() {
 
             let _ = helpers::print_result(result);
         }
-        ActionType::Remove(remove_command) => {
-            // TODO: -i and -t ALL
+        ActionType::Remove(remove_command) => match remove_command.kind {
+            RemoveCommandType::ALL => {
+                let result = TodoRepository::delete_completed(&mut connection);
+
+                let _ = helpers::print_result(result);
+            }
+            RemoveCommandType::ID => {
+                let result = TodoRepository::delete(&mut connection, remove_command.id);
+
+                let _ = helpers::print_result(result);
+            }
         },
         ActionType::List(list_command) => {
             let new_date: Option<NaiveDate> =
