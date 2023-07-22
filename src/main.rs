@@ -1,5 +1,4 @@
 use std::{
-    collections::HashMap,
     fs,
     io::{self, Write},
 };
@@ -75,31 +74,24 @@ fn main() {
             let _ = helpers::print_result(result);
         }
         ActionType::Export(export_command) => {
-            let _command = export_command;
-            let mut groups: HashMap<NaiveDate, Vec<models::Todo>> = HashMap::new();
+            let command = export_command;
 
-            let filter = models::todo::FilterTodo {
-                completed: None,
-                when_will_it_be_done: None,
-            };
+            match command.export_type {
+                args::ExportCommandType::Html => {
+                    let content = helpers::export_html(&mut connection);
 
-            let todos = TodoRepository::find_all(&mut connection, filter);
+                    fs::write("index.html", content).expect("Unable to write file!");
 
-            match todos {
-                Err(e) => println!("{:?}", e),
-                Ok(result) => {
-                    result.into_iter().for_each(|todo| {
-                        let group = groups.entry(todo.when_will_it_be_done).or_insert(vec![]);
-                        group.push(todo);
-                    });
+                    let _ = writeln!(io::stdout(), "{}", "Ok!".green());
+                }
+                args::ExportCommandType::Markdown => {
+                    let content = helpers::export_markdown(&mut connection);
+
+                    fs::write("index.md", content).expect("Unable to write file!");
+                    
+                    let _ = writeln!(io::stdout(), "{}", "Ok!".green());
                 }
             }
-
-            let content = helpers::generate_html(groups);
-
-            fs::write("index.html", content).expect("Unable to write file!");
-
-            let _ = writeln!(io::stdout(), "{}", "Ok!".green());
         }
     }
 }
