@@ -1,5 +1,6 @@
 use chrono::{DateTime, Local, NaiveDate};
 use colored::Colorize;
+use diesel::SqliteConnection;
 use std::{
     collections::HashMap,
     io::{self, Write},
@@ -8,6 +9,7 @@ use std::{
 use crate::{
     args::{AddCommandDate, ListCommandDate, ListCommandType},
     models::{self, Todo},
+    repositories::TodoRepository,
 };
 
 pub fn get_date(date: &AddCommandDate) -> DateTime<Local> {
@@ -67,6 +69,72 @@ pub fn print_result<T, E>(result: Result<T, E>) -> Result<(), io::Error> {
         Ok(_) => writeln!(io::stdout(), "{}", "Ok!".green()),
         Err(_) => writeln!(io::stdout(), "{}", "Ok!".red()),
     }
+}
+
+pub fn export_html(c: &mut SqliteConnection) -> String {
+    let mut groups: HashMap<NaiveDate, Vec<models::Todo>> = HashMap::new();
+
+    let filter = models::todo::FilterTodo {
+        completed: None,
+        when_will_it_be_done: None,
+    };
+
+    let todos = TodoRepository::find_all(c, filter);
+
+    match todos {
+        Err(e) => println!("{:?}", e),
+        Ok(result) => {
+            result.into_iter().for_each(|todo| {
+                let group = groups.entry(todo.when_will_it_be_done).or_insert(vec![]);
+                group.push(todo);
+            });
+        }
+    }
+
+    return generate_html(groups);
+}
+
+pub fn export_markdown(c: &mut SqliteConnection) -> String {
+    let mut groups: HashMap<NaiveDate, Vec<models::Todo>> = HashMap::new();
+
+    let filter = models::todo::FilterTodo {
+        completed: None,
+        when_will_it_be_done: None,
+    };
+
+    let todos = TodoRepository::find_all(c, filter);
+
+    match todos {
+        Err(e) => println!("{:?}", e),
+        Ok(result) => {
+            result.into_iter().for_each(|todo| {
+                let group = groups.entry(todo.when_will_it_be_done).or_insert(vec![]);
+                group.push(todo);
+            });
+        }
+    }
+
+    return generate_markdown(groups);
+}
+
+pub fn generate_markdown(groups: HashMap<NaiveDate, Vec<models::Todo>>) -> String {
+    let mut content = String::new();
+
+    for (date, todos) in groups.iter() {
+        let h1 = format!("# {}\n", date);
+
+        content.push_str(&h1);
+
+        for todo in todos {
+            let check = if todo.completed { "x" } else { " " };
+
+            let checkbox = format!("- [{}] {}\n", check, todo.content);
+
+            content.push_str(&checkbox);
+        }
+    }
+
+    content
 }
 
 pub fn generate_html(groups: HashMap<NaiveDate, Vec<models::Todo>>) -> String {
@@ -234,5 +302,36 @@ mod tests {
         let slice = &html[0..15];
 
         assert_eq!(slice, "<!DOCTYPE html>");
+    }
+
+    #[test]
+    fn test_generate_markdown() {
+        use chrono::NaiveDate;
+        use models::Todo;
+        use std::collections::HashMap;
+
+        // Create some sample data
+        let mut groups: HashMap<NaiveDate, Vec<Todo>> = HashMap::new();
+        let todos = vec![
+            Todo {
+                id: 1,
+                content: "Buy groceries".to_owned(),
+                completed: false,
+                when_will_it_be_done: Local::now().naive_local().into(),
+            },
+            Todo {
+                id: 2,
+                content: "Clean the house".to_owned(),
+                completed: true,
+                when_will_it_be_done: Local::now().naive_local().into(),
+            },
+        ];
+        groups.insert(NaiveDate::from_ymd_opt(2023, 7, 1).unwrap(), todos);
+
+        // Call the generate_markdown function
+        let markdown = generate_markdown(groups);
+        let slice = &markdown[0..2];
+
+        assert_eq!(slice, "# ");
     }
 }
